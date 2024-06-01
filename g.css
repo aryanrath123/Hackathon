@@ -1,0 +1,358 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    color: #000;
+}
+
+h1 {
+
+    text-align: center;
+color: black;
+font-style: italic;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   
+
+}
+.dark-head{
+    h1{
+        color: lightseagreen;
+    }
+    
+}
+
+
+
+
+:root {
+    --background-color: #fff;
+    --text-color: #555;
+    --title-color: #000;
+}
+
+.dark-theme {
+    --background-color: #000;
+    --text-color: #999;
+    --title-color: #fff;
+}
+
+body {
+    background: var(--background-color);
+    color: var(--text-color);
+    transition: background 0.8s, color 0.8s;
+}
+
+.header {
+    width: 100%;
+    min-height: 20vh;
+
+    position: relative;
+    overflow: hidden;
+    padding: 0 8% 2%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    height: 70px;
+}
+
+.logo img {
+    width: 80px;
+}
+
+nav ul {
+    width: 100%;
+    text-align: right;
+    list-style: none;
+    margin-right: 50px;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 5px 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 6px 20px;
+    transition: .5s;
+    position: relative;
+
+}
+
+nav ul li a:hover {
+    color: blue;
+    font-size: 20px;
+
+}
+
+nav a span {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-bottom: 2px solid blue;
+    border-radius: 15px;
+    transform: scale(0) translateY(50px);
+    transition: .5s;
+    background-color: lightgreen;
+}
+
+nav a:hover span {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.toggle-btn {
+    background: #4864ff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.toggle-btn img {
+    width: 25px;
+    margin-left: 10px;
+
+}
+
+.dark-hover {
+    nav ul li a:hover {
+        color: #0ef
+    }
+
+    nav a span {
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        border-bottom: 2px solid #0ef;
+        border-radius: 15px;
+        transform: scale(0) translateY(50px);
+        transition: .5s;
+        background-color: black;
+    }
+
+    nav a:hover span {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+
+}
+
+
+.controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5%;
+}
+
+#drop-area {
+    width: calc(50% - 10px);
+    height: 200px;
+    padding: 30px;
+    background: #fff;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 3px solid violet;
+    font-size: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#drop-area p {
+    margin-top: 20px;
+    /* Adjust spacing between the image and the text */
+}
+
+#drop-area span {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-top: 15px;
+    /* Adjust spacing between the text and the bottom */
+}
+
+
+
+
+.start-webcam-btn {
+    width: 300px;
+    height: 300px;
+    background-color: lightskyblue;
+    color: black;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 50px;
+    border-radius: 50%;
+    border: 4px solid violet;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+}
+
+.start-webcam-btn text {
+    margin-top: 5px;
+}
+
+.hero {
+    width: 500px;
+    background: linear-gradient(#e7baff, #c2b6d9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin-left: 60%;
+    margin-top: 1px;
+
+}
+
+#drop-area {
+    width: 500px;
+    height: 300px;
+    padding: 30px;
+    background: lightskyblue;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 4px solid violet;
+    font-size: 30px;
+}
+
+#img-view {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    border: 2px dashed #bbb5ff;
+    background: #f7f8ff;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#img-view img {
+    width: 100px;
+    margin-top: 25px;
+}
+
+#img-view span {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-top: 15px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+}
+
+#webcam-container,
+#image-container {
+    border: 3px solid black;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#webcam-container {
+    margin-left: 20%;
+}
+
+#image-container {
+    margin-right: 20%;
+}
+
+#image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.prediction-container {
+    border: 2px solid red;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #fff;
+    margin-top: 10px;
+    color: darkblue;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.prediction-container div:nth-child(1) {
+    background-color: lightgreen;
+    border: 2px solid black;
+}
+
+.prediction-container div:nth-child(2) {
+    background-color: lightseagreen;
+    border: 2px solid black;
+    margin-top: 5px;
+}
+
+.prediction-container div:nth-child(3) {
+    background-color: lightpink;
+    border: 2px solid black;
+    margin-top: 5px;
+}
+
+.prediction-container div:nth-child(4) {
+    background-color: lightslategrey;
+    border: 2px solid black;
+    margin-top: 5px;
+}
+
+.prediction-container div:nth-child(5) {
+    background-color: lightcoral;
+    border: 2px solid black;
+    margin-top: 5px;
+}
+
+.prediction-container div:nth-child(6) {
+    background-color: lightskyblue;
+    border: 2px solid black;
+    margin-top: 5px;
+}
+
+#webcam-label-container,
+#image-label-container {
+    border: 2px solid black;
+    width: fit-content;
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+#webcam-label-container {
+    margin-left: 20%;
+}
+
+#image-label-container {
+    margin-right: 20%;
+}

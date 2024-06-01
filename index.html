@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="g.css">
+</head>
+
+<body>
+    <div class="header">
+        <nav>
+            <a href="#" class="logo"><img src="hacklogo.png"></a>
+            <ul>
+                <li><a href="g.html" t>Home<span></span></a></li>
+                <li><a href="#">Features<span></span></a></li>
+                <li><a href="contact.html" target="_blank" id="contactLink">Contact<span></span></a></li>
+                <li><a href="about.html" target="_blank" id="aboutLink">About Us<span></span></a></li>
+            </ul>
+            <div class="toggle-btn" id="btn">
+                <span id="btnText">Dark</span>
+                <img src="moon.png" id="btnIcon">
+            </div>
+        </nav>
+    </div>
+    <h1>AI ROAD ANALYSER</h1>
+    <div class="controls-container">
+        <div class="start-webcam-container">
+            <button class="btn start-webcam-btn" type="button" onclick="setupWebcam()">Start Webcam</button>
+        </div>
+        <div class="drop-area-container">
+            <label for="input-file" id="drop-area">
+                <input type="file" accept="image/*" id="input-file" hidden>
+                <div id="img-view">
+                    <img src="508-icon.png">
+                    <p>Drag and drop or click here <br> to upload image</p>
+                    <span>Upload any images from desktop</span>
+                </div>
+            </label>
+        </div>
+    </div>
+    <div class="container">
+        <div id="webcam-container"></div>
+        <div id="image-container"></div>
+    </div>
+    <div class="container">
+        <div id="webcam-label-container" class="prediction-container"></div>
+        <div id="image-label-container" class="prediction-container"></div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+
+        const URL = "https://teachablemachine.withgoogle.com/models/XwDCyI43u/";
+
+
+
+        let model, webcam, maxPredictions;
+
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+        }
+
+        async function setupWebcam() {
+            const flip = true;
+            const width = 400;
+            const height = 300;
+            webcam = new tmImage.Webcam(width, height, flip);
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+        }
+
+        async function handleImageUpload(imageSrc) {
+            const imgElement = document.createElement("img");
+            imgElement.src = imageSrc;
+            imgElement.onload = async function () {
+                document.getElementById("image-container").innerHTML = ""; // Clear previous image
+                document.getElementById("image-container").appendChild(imgElement);
+                const predictions = await predict(imgElement);
+                displayPredictions(predictions, "image-label-container");
+            };
+        }
+
+        async function loop() {
+            webcam.update();
+            const webcamPredictions = await predict(webcam.canvas);
+            displayPredictions(webcamPredictions, "webcam-label-container");
+            window.requestAnimationFrame(loop);
+        }
+
+        async function predict(imageElement) {
+            const prediction = await model.predict(imageElement);
+            return prediction.map(pred => ({
+                className: pred.className,
+                probability: pred.probability.toFixed(2)
+            }));
+        }
+
+        function displayPredictions(predictions, containerId) {
+            const labelContainer = document.getElementById(containerId);
+            if (labelContainer) {
+                labelContainer.innerHTML = ""; // Clear previous predictions
+                predictions.forEach(prediction => {
+                    const classPrediction = prediction.className + ": " + prediction.probability;
+                    const predictionDiv = document.createElement("div");
+                    predictionDiv.textContent = classPrediction;
+                    labelContainer.appendChild(predictionDiv);
+                });
+            } else {
+                console.error("Container with ID '" + containerId + "' not found.");
+            }
+        }
+
+        // Initialize the model when the page loads
+        window.onload = async function () {
+            await init();
+        };
+
+        // Drag and drop functionality
+        const dropArea = document.getElementById("drop-area");
+        const inputFile = document.getElementById("input-file");
+        const imageView = document.getElementById("img-view");
+
+        inputFile.addEventListener("change", (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                uploadImage(file);
+            }
+        });
+
+        function uploadImage(file) {
+            let imgLink = window.URL.createObjectURL(file);
+            imageView.style.backgroundImage = `url(${imgLink})`;
+            imageView.textContent = "";
+            imageView.style.border = 0;
+            handleImageUpload(imgLink);
+        }
+
+        dropArea.addEventListener("dragover", function (e) {
+            e.preventDefault();
+        });
+
+        dropArea.addEventListener("drop", function (e) {
+            e.preventDefault();
+            inputFile.files = e.dataTransfer.files;
+            const file = inputFile.files[0];
+            if (file) {
+                uploadImage(file);
+            }
+        });
+    </script>
+<script src="g.js"></script>
+</body>
+</html>
